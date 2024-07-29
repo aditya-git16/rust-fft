@@ -1,5 +1,6 @@
 // Polynomial evaluation function
 
+#[derive(Debug)]
 pub struct Polynomial{ 
     pub coefficients : Vec<f64>,
 }

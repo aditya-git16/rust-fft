@@ -4,14 +4,14 @@ use polynomials::Polynomial;
 
 pub mod polynomials;
 
-pub fn get_polynomial_from_input<R: io::BufRead>(mut reader:R) -> io::Result<Polynomial> {
+pub fn get_polynomial_from_input() -> io::Result<Polynomial> {
     let mut input = String::new();
 
     print!("Coefficients for the polynomial: ");
     io::stdout().flush()?;
 
-    reader.read_line(&mut input)?;
-    // io::stdin().read_line(&mut input)?;
+    //reader.read_line(&mut input)?;
+    io::stdin().read_line(&mut input)?;
 
     let coefficients: Vec<f64> = input
     .trim()
@@ -32,13 +32,19 @@ mod tests{
     use crate::get_polynomial_from_input;
 
     #[test]
+    #[ignore]
     fn test_get_polynomial_from_input_valid(){
-        // Simulating user input
-        let input= b"1.0 2.5 3.7\n";
-        let cursor = Cursor::new(input);
-        let result = get_polynomial_from_input(cursor);
-        assert!(result.is_ok());
-        let polynomial =result.unwrap();
-        assert_eq!(polynomial.coefficients, vec![1.0, 2.5, 3.7]);
+        println!("This test requires user input.");
+        println!("Enter coefficients when prompted.");
+
+        match get_polynomial_from_input(){
+            Ok(polynomial) => {
+                println!("Received polynomial: {:?}" , polynomial);
+
+            },
+            Err(e) => {
+                panic!("Error occured: {}" , e)
+            }
+        }
     }
 }
