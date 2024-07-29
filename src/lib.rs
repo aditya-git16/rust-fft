@@ -27,12 +27,11 @@ pub fn get_polynomial_from_input() -> io::Result<Polynomial> {
 }
 #[cfg(test)]
 mod tests{
-    use std::io::Cursor;
+    use std::{io::Cursor, result};
 
-    use crate::get_polynomial_from_input;
+    use crate::{get_polynomial_from_input, polynomials::Polynomial};
 
     #[test]
-    #[ignore]
     fn test_get_polynomial_from_input_valid(){
         println!("This test requires user input.");
         println!("Enter coefficients when prompted.");
@@ -43,7 +42,22 @@ mod tests{
 
             },
             Err(e) => {
-                panic!("Error occured: {}" , e)
+                panic!("Error occured: {}" , e);
+            }
+        }
+    }
+
+    #[test]
+    fn test_evaluate_function(){
+        println!("Enter coefficients for the polynomial.");
+        match get_polynomial_from_input(){
+            Ok(polynomial) => {
+                let result = Polynomial::evaluate(&polynomial, 2.0);
+                assert_eq!(result,31.0);
+                println!("Evaluated polynomial is: {:?}" , result);
+            }
+            Err(e) => {
+                panic!("Error occured: {}" , e);
             }
         }
     }
